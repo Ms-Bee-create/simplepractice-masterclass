@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The SimplePractice Self-Billing Masterclass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #1c1c1c;
+    --muted: #6b6560;
+    --bg: #fdfbf7;
+    --sage: rgba(122, 158, 126, 0.14);
+    --card: #f5f2ed;
+    --card-line: #e6e0d6;
+    --accent: #7a9e7e;
+    --accent-dark: #5f7d63;
+    --line: #e8e1d8;
+    --good: #3f7a54;
+    --good-bg: #eaf3ec;
+    --warn: #b5482f;
+    --warn-bg: #fbeae5;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--ink);
+    background-color: var(--bg);
+    background-image:
+      repeating-linear-gradient(2deg, rgba(122,158,126,0.14) 0px, rgba(122,158,126,0.14) 1px, rgba(0,0,0,0) 1px, rgba(0,0,0,0) 4px),
+      radial-gradient(at 50% 0%, rgba(255,254,250,0.98) 0%, rgba(233,238,225,0.9) 45%, rgba(219,229,211,0.85) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+  .wrap{max-width:900px; margin:0 auto; padding:56px 24px 80px;}
+
+  header.hero{text-align:center; margin-bottom:48px;}
+  .avatar{
+    width:88px; height:88px; border-radius:50%;
+    margin:0 auto 20px;
+    background: linear-gradient(135deg, #a9c1a7, #7a9e7e);
+    display:flex; align-items:center; justify-content:center;
+    font-family:"Playfair Display", serif;
+    font-size:1.6rem; color:#fff; font-weight:600;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 10px rgba(90,110,80,0.18);
+  }
+  .eyebrow{
+    display:inline-block;
+    font-size:0.75rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--accent-dark);
+    background:#eef1e8;
+    border:1px solid var(--card-line);
+    border-radius:999px;
+    padding:5px 14px;
+    margin-bottom:18px;
+  }
+  h1{font-family:"Playfair Display", serif; font-weight:600; font-size:2.2rem; margin:0 0 12px; line-height:1.3;}
+  .sub{color:var(--muted); font-size:1.05rem; max-width:600px; margin:0 auto; line-height:1.6;}
+
+  .progress-note{
+    text-align:center;
+    color:var(--muted);
+    font-size:0.9rem;
+    margin-bottom:36px;
+  }
+
+  .module{
+    background:var(--card);
+    border:1px solid var(--card-line);
+    border-radius:18px;
+    margin-bottom:16px;
+    overflow:hidden;
+    box-shadow: 0 1px 3px rgba(90,110,80,0.06);
+  }
+  .module-head{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding:20px 24px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .module-num{
+    flex:0 0 auto;
+    width:40px; height:40px;
+    border-radius:10px;
+    background:#eef1e8;
+    color:var(--accent-dark);
+    font-family:"Playfair Display", serif;
+    font-weight:700;
+    font-size:1rem;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .module-num.done{background:var(--good-bg); color:var(--good);}
+  .module-titles{flex:1 1 auto;}
+  .module-titles .m-title{font-family:"Playfair Display", serif; font-weight:600; font-size:1.1rem;}
+  .module-titles .m-sub{color:var(--muted); font-size:0.85rem; margin-top:2px;}
+  .chevron{
+    color:var(--muted);
+    font-size:0.8rem;
+    transition:transform .15s;
+    flex:0 0 auto;
+  }
+  .module.open .chevron{transform:rotate(90deg);}
+
+  .lessons{
+    border-top:1px solid var(--card-line);
+    display:none;
+    background: #faf8f3;
+  }
+  .module.open .lessons{display:block;}
+  .lesson{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:14px 24px 14px 24px;
+    border-bottom:1px solid var(--card-line);
+  }
+  .lesson:last-child{border-bottom:none;}
+  .lesson .dot{
+    flex:0 0 auto;
+    width:22px; height:22px;
+    border-radius:50%;
+    border:2px solid var(--card-line);
+    background:#fff;
+  }
+  .lesson .l-text{flex:1 1 auto; font-size:0.95rem; color:var(--ink);}
+  .lesson .l-status{
+    flex:0 0 auto;
+    font-size:0.75rem;
+    color:var(--accent-dark);
+    background:#eef1e8;
+    border-radius:999px;
+    padding:3px 10px;
+  }
+
+  footer{
+    text-align:center;
+    color:var(--muted);
+    font-size:0.85rem;
+    margin-top:56px;
+    padding-top:24px;
+    border-top:1px solid var(--card-line);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="avatar">AC</div>
+    <span class="eyebrow">The SimplePractice Self-Billing Masterclass</span>
+    <h1>Run your own billing, front to back, inside SimplePractice</h1>
+    <p class="sub">A step-by-step course for solo and new mental health practice owners â from credentialing through claims to a repeatable monthly admin routine.</p>
+  </header>
+
+  <p class="progress-note">6 modules Â· 33 lessons Â· lessons unlock as they're added</p>
+
+  <div class="module open" data-module="0">
+    <div class="module-head" onclick="toggleModule(this)">
+      <div class="module-num">0</div>
+      <div class="module-titles">
+        <div class="m-title">Before You Start (Orientation)</div>
+        <div class="m-sub">3 lessons Â· a short module so nobody starts Module 1 lost</div>
+      </div>
+      <div class="chevron">â¶</div>
+    </div>
+    <div class="lessons">
+      <div class="lesson"><span class="dot"></span><span class="l-text">Welcome &amp; what this course covers</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">The order of operations: credentialing â NPI â CAQH â panel applications â EDI enrollment â you're live</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">What you need in hand before you begin</span><span class="l-status">Coming soon</span></div>
+    </div>
+  </div>
+
+  <div class="module" data-module="1">
+    <div class="module-head" onclick="toggleModule(this)">
+      <div class="module-num">1</div>
+      <div class="module-titles">
+        <div class="m-title">Practice Setup</div>
+        <div class="m-sub">12 lessons Â· credentialing, EDI/ERA enrollment, and getting SimplePractice configured</div>
+      </div>
+      <div class="chevron">â¶</div>
+    </div>
+    <div class="lessons">
+      <div class="lesson"><span class="dot"></span><span class="l-text">NPI basics â Type 1 vs Type 2</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Getting credentialed: CAQH profile setup</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Applying to insurance panels â what to expect</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">EDI enrollment for claim submission</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">ERA enrollment â the automation key</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Setting up your practice info: addresses, Tax ID, NPI</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Adding providers/clinicians in the system</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Setting up services &amp; CPT codes</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Building your fee schedule</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Setting up appointment types so claims generate correctly</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">The Good Faith Estimate requirement (No Surprises Act)</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Checklist lesson: did you miss anything?</span><span class="l-status">Coming soon</span></div>
+    </div>
+  </div>
+
+  <div class="module" data-module="2">
+    <div class="module-head" onclick="toggleModule(this)">
+      <div class="module-num">2</div>
+      <div class="module-titles">
+        <div class="m-title">Client Billing</div>
+        <div class="m-sub">8 lessons Â· invoicing, payments, auto-pay, and superbills</div>
+      </div>
+      <div class="chevron">â¶</div>
+    </div>
+    <div class="lessons">
+      <div class="lesson"><span class="dot"></span><span class="l-text">Entering a client's card on file</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Invoicing basics â generating and sending an invoice</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Understanding and tracking client balances</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Processing a payment</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Processing a refund</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Setting up Auto-Pay</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">No-show / late-cancellation fees</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Superbills for out-of-network / private-pay clients</span><span class="l-status">Coming soon</span></div>
+    </div>
+  </div>
+
+  <div class="module" data-module="3">
+    <div class="module-head" onclick="toggleModule(this)">
+      <div class="module-num">3</div>
+      <div class="module-titles">
+        <div class="m-title">Insurance Billing</div>
+        <div class="m-sub">10 lessons Â· eligibility, coding, claims, denials, and reconciliation</div>
+      </div>
+      <div class="chevron">â¶</div>
+    </div>
+    <div class="lessons">
+      <div class="lesson"><span class="dot"></span><span class="l-text">Entering insurance info + uploading the insurance card</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Admin notes for tracking eligibility status</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Running eligibility &amp; benefits checks in SimplePractice</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Money-saving tip: Availity as a free alternative</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Mental health coding basics: CPT, diagnosis codes, modifiers</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Claim generation and submission</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Secondary insurance / coordination of benefits billing</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">RCM: claims tracking and follow-up</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Reading denials â common reasons and how to resolve/appeal</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Reconciliation (when and how it's needed)</span><span class="l-status">Coming soon</span></div>
+    </div>
+  </div>
+
+  <div class="module" data-module="4">
+    <div class="module-head" onclick="toggleModule(this)">
+      <div class="module-num">4</div>
+      <div class="module-titles">
+        <div class="m-title">Automation &amp; Your Admin Workflow</div>
+        <div class="m-sub">7 lessons Â· the payoff module â this is where it all clicks together</div>
+      </div>
+      <div class="chevron">â¶</div>
+    </div>
+    <div class="lessons">
+      <div class="lesson"><span class="dot"></span><span class="l-text">How EDI + ERA together enable one-button claims &amp; auto-posting</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Your weekly/admin-time routine: what to check, in what order</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Running an outstanding-balances report</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Using the balance checker tool to flag issues before appointments</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Tracking aging insurance payments and spotting issues via remits</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Resolving aging claims: payer portal lookups and phone follow-up</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Putting it together: a sample "admin day" walkthrough</span><span class="l-status">Coming soon</span></div>
+    </div>
+  </div>
+
+  <div class="module" data-module="5">
+    <div class="module-head" onclick="toggleModule(this)">
+      <div class="module-num">5</div>
+      <div class="module-titles">
+        <div class="m-title">Wrap-Up</div>
+        <div class="m-sub">3 lessons Â· HIPAA basics, finances, and where to go from here</div>
+      </div>
+      <div class="chevron">â¶</div>
+    </div>
+    <div class="lessons">
+      <div class="lesson"><span class="dot"></span><span class="l-text">HIPAA basics &amp; BAAs when using third-party tools alongside SimplePractice</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">A brief note on separating business &amp; personal finances</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Where to go from here / what this course doesn't cover</span><span class="l-status">Coming soon</span></div>
+    </div>
+  </div>
+
+  <footer>
+    The SimplePractice Self-Billing Masterclass Â· built for solo & new practice owners running SimplePractice
+  </footer>
+</div>
+
+<script>
+function toggleModule(headEl){
+  var mod = headEl.closest('.module');
+  var wasOpen = mod.classList.contains('open');
+  document.querySelectorAll('.module').forEach(function(m){ m.classList.remove('open'); });
+  if(!wasOpen){ mod.classList.add('open'); }
+}
+</script>
+</body>
+</html>
