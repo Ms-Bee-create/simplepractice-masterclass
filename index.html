@@ -139,6 +139,27 @@
     border-radius:999px;
     padding:3px 10px;
   }
+  .tag-ins{
+    flex:0 0 auto;
+    font-size:0.7rem;
+    color:var(--warn);
+    background:var(--warn-bg);
+    border-radius:999px;
+    padding:3px 10px;
+    margin-right:2px;
+  }
+  .m-title-row{display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
+  .path-note{
+    background:var(--good-bg);
+    border:1px solid #cfe3d5;
+    border-radius:14px;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:0.9rem;
+    color:var(--ink);
+    line-height:1.6;
+  }
+  .path-note strong{color:var(--good);}
 
   footer{
     text-align:center;
@@ -160,21 +181,23 @@
     <p class="sub">A step-by-step course for solo and new mental health practice owners â from credentialing through claims to a repeatable monthly admin routine.</p>
   </header>
 
-  <p class="progress-note">6 modules Â· 41 lessons Â· lessons unlock as they're added</p>
+  <p class="progress-note">7 modules Â· 30 lessons Â· lessons unlock as they're added</p>
+
+  <div class="path-note">
+    <strong>Two paths through this course:</strong> if you're self-pay only and not billing insurance, you can skip Module 4 (Insurance Billing) and Module 5 (Automation) entirely â those are tagged <span class="tag-ins" style="margin:0 2px;">Insurance track</span> below. Your path is Modules 0 â 1 (skip EDI/ERA) â 2 â 3 â 6, and it's just as complete a course for how you bill.
+  </div>
 
   <div class="module open" data-module="0">
     <div class="module-head" onclick="toggleModule(this)">
       <div class="module-num">0</div>
       <div class="module-titles">
         <div class="m-title">Before You Start (Orientation)</div>
-        <div class="m-sub">3 lessons Â· a short module so nobody starts Module 1 lost</div>
+        <div class="m-sub">1 lesson Â· a short video so nobody starts Module 1 lost</div>
       </div>
       <div class="chevron">â¶</div>
     </div>
     <div class="lessons">
-      <div class="lesson"><span class="dot"></span><span class="l-text">Welcome &amp; what this course covers</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">The order of operations: credentialing â NPI â CAQH â panel applications â EDI enrollment â you're live</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">What you need in hand before you begin</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Welcome, the course roadmap, and what to have ready before you start</span><span class="l-status">Coming soon</span></div>
     </div>
   </div>
 
@@ -183,21 +206,18 @@
       <div class="module-num">1</div>
       <div class="module-titles">
         <div class="m-title">Practice Setup</div>
-        <div class="m-sub">10 lessons Â· EDI/ERA enrollment and getting SimplePractice fully configured</div>
+        <div class="m-sub">7 lessons Â· getting SimplePractice fully configured before you bill anything</div>
       </div>
       <div class="chevron">â¶</div>
     </div>
     <div class="lessons">
-      <div class="lesson"><span class="dot"></span><span class="l-text">Orientation: are you credentialed and enrolled yet?</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Setting up your practice info: addresses, Tax ID, NPI</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Adding providers/clinicians in the system</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">EDI enrollment â the step most providers miss</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">ERA enrollment â the automation key</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Setting up services &amp; CPT codes</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Building your fee schedule</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Setting up appointment types so claims generate correctly</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">The Good Faith Estimate requirement (No Surprises Act)</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Checklist lesson: did you miss anything?</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Orientation + upsell: are you credentialed and enrolled yet?</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Practice info & providers: addresses, Tax ID, NPI, adding clinicians</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="tag-ins">Insurance track</span><span class="dot"></span><span class="l-text">EDI enrollment â the step most providers miss</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="tag-ins">Insurance track</span><span class="dot"></span><span class="l-text">ERA enrollment â the automation key</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Services & CPT codes + building your fee schedule</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Appointment types + setup checklist: did you miss anything?</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">HIPAA basics & BAAs when using third-party tools alongside SimplePractice</span><span class="l-status">Coming soon</span></div>
     </div>
   </div>
 
@@ -206,19 +226,17 @@
       <div class="module-num">2</div>
       <div class="module-titles">
         <div class="m-title">Client Billing</div>
-        <div class="m-sub">8 lessons Â· invoicing, payments, auto-pay, and superbills</div>
+        <div class="m-sub">6 lessons Â· invoicing, statements, payments, and auto-pay</div>
       </div>
       <div class="chevron">â¶</div>
     </div>
     <div class="lessons">
-      <div class="lesson"><span class="dot"></span><span class="l-text">Entering a client's card on file</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Invoicing basics â generating and sending an invoice</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Understanding and tracking client balances</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Processing a payment</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Card on file & invoicing basics</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Understanding client balances & processing a payment</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Generating a client statement</span><span class="l-status">Coming soon</span></div>
       <div class="lesson"><span class="dot"></span><span class="l-text">Processing a refund</span><span class="l-status">Coming soon</span></div>
       <div class="lesson"><span class="dot"></span><span class="l-text">Setting up Auto-Pay</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">No-show / late-cancellation fees</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Superbills for out-of-network / private-pay clients</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">No-show / late-cancellation fees â policy and setup</span><span class="l-status">Coming soon</span></div>
     </div>
   </div>
 
@@ -226,22 +244,17 @@
     <div class="module-head" onclick="toggleModule(this)">
       <div class="module-num">3</div>
       <div class="module-titles">
-        <div class="m-title">Insurance Billing</div>
-        <div class="m-sub">10 lessons Â· eligibility, coding, claims, denials, and reconciliation</div>
+        <div class="m-title">Self-Pay Billing</div>
+        <div class="m-sub">5 lessons Â· for self-pay-only and mixed practices alike</div>
       </div>
       <div class="chevron">â¶</div>
     </div>
     <div class="lessons">
-      <div class="lesson"><span class="dot"></span><span class="l-text">Entering insurance info + uploading the insurance card</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Admin notes for tracking eligibility status</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Running eligibility &amp; benefits checks in SimplePractice</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Money-saving tip: Availity as a free alternative</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Mental health coding basics: CPT, diagnosis codes, modifiers</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Claim generation and submission</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Secondary insurance / coordination of benefits billing</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">RCM: claims tracking and follow-up</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Reading denials â common reasons and how to resolve/appeal</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Reconciliation (when and how it's needed)</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Self-pay basics â setting a client up as self-pay in SimplePractice</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Setting your self-pay rate & sliding scale</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">The Good Faith Estimate (No Surprises Act) â who needs one, how to generate it</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Superbills for self-pay / out-of-network clients</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Collecting payment upfront vs. after session â policy & setup</span><span class="l-status">Coming soon</span></div>
     </div>
   </div>
 
@@ -249,19 +262,18 @@
     <div class="module-head" onclick="toggleModule(this)">
       <div class="module-num">4</div>
       <div class="module-titles">
-        <div class="m-title">Automation &amp; Your Admin Workflow</div>
-        <div class="m-sub">7 lessons Â· the payoff module â this is where it all clicks together</div>
+        <div class="m-title-row"><div class="m-title">Insurance Billing</div><span class="tag-ins">Insurance track</span></div>
+        <div class="m-sub">6 lessons Â· eligibility, coding, claims, denials, and reconciliation</div>
       </div>
       <div class="chevron">â¶</div>
     </div>
     <div class="lessons">
-      <div class="lesson"><span class="dot"></span><span class="l-text">How EDI + ERA together enable one-button claims &amp; auto-posting</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Your weekly/admin-time routine: what to check, in what order</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Running an outstanding-balances report</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Using the balance checker tool to flag issues before appointments</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Tracking aging insurance payments and spotting issues via remits</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Resolving aging claims: payer portal lookups and phone follow-up</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Putting it together: a sample "admin day" walkthrough</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Entering insurance info + tracking eligibility status</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Running eligibility & benefits checks â plus the Availity money-saving tip</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Mental health coding basics: CPT, diagnosis codes, modifiers</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Claim generation and submission</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Secondary insurance & RCM: claims tracking and follow-up</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Reading denials and running reconciliation</span><span class="l-status">Coming soon</span></div>
     </div>
   </div>
 
@@ -269,15 +281,30 @@
     <div class="module-head" onclick="toggleModule(this)">
       <div class="module-num">5</div>
       <div class="module-titles">
-        <div class="m-title">Wrap-Up</div>
-        <div class="m-sub">3 lessons Â· HIPAA basics, finances, and where to go from here</div>
+        <div class="m-title-row"><div class="m-title">Automation & Your Admin Workflow</div><span class="tag-ins">Insurance track</span></div>
+        <div class="m-sub">4 lessons Â· the payoff module â this is where it all clicks together</div>
       </div>
       <div class="chevron">â¶</div>
     </div>
     <div class="lessons">
-      <div class="lesson"><span class="dot"></span><span class="l-text">HIPAA basics &amp; BAAs when using third-party tools alongside SimplePractice</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">A brief note on separating business &amp; personal finances</span><span class="l-status">Coming soon</span></div>
-      <div class="lesson"><span class="dot"></span><span class="l-text">Where to go from here / what this course doesn't cover</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">How EDI + ERA together enable one-button claims & auto-posting</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Your weekly admin routine & running an outstanding-balances report</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Using the balance checker tool & tracking aging insurance payments</span><span class="l-status">Coming soon</span></div>
+      <div class="lesson"><span class="dot"></span><span class="l-text">Resolving aging claims + a sample "admin day" walkthrough</span><span class="l-status">Coming soon</span></div>
+    </div>
+  </div>
+
+  <div class="module" data-module="6">
+    <div class="module-head" onclick="toggleModule(this)">
+      <div class="module-num">6</div>
+      <div class="module-titles">
+        <div class="m-title">Wrap-Up</div>
+        <div class="m-sub">1 lesson Â· finances note & where to go from here</div>
+      </div>
+      <div class="chevron">â¶</div>
+    </div>
+    <div class="lessons">
+      <div class="lesson"><span class="dot"></span><span class="l-text">Separating business & personal finances, and where to go from here</span><span class="l-status">Coming soon</span></div>
     </div>
   </div>
 
