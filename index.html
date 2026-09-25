@@ -271,6 +271,41 @@
     0%, 100%{box-shadow:0 0 0 0 rgba(122,158,126,0);}
     50%{box-shadow:0 0 0 6px rgba(122,158,126,0.35);}
   }
+
+  /* lesson panel: why-line, watch/read/listen tabs, chapters, takeaway */
+  .l-why{
+    display:block; font-size:0.8rem; color:var(--muted); margin-top:2px; font-weight:400;
+  }
+  .panel-tabs{
+    display:flex; gap:6px; padding:16px 24px 0;
+  }
+  .ptab{
+    font-family:"Inter", sans-serif; font-size:0.78rem; font-weight:600;
+    color:var(--muted); background:transparent;
+    border:1px solid var(--card-line); border-radius:999px;
+    padding:5px 14px; cursor:pointer; transition:background .15s, color .15s;
+  }
+  .ptab:hover:not([disabled]){background:#eef1e8;}
+  .ptab.active{background:var(--accent-dark); color:#fff; border-color:var(--accent-dark);}
+  .ptab[disabled]{opacity:0.45; cursor:default;}
+  .panel-view{padding:14px 24px 4px;}
+  .chapters{
+    margin:14px 0 0; padding-left:16px; border-left:2px solid var(--card-line);
+    font-size:0.85rem; color:var(--muted);
+  }
+  .chapters div{padding:4px 0; cursor:pointer;}
+  .chapters div:hover{color:var(--accent-dark);}
+  .chapters span{
+    font-family:"Inter", sans-serif; font-weight:700; color:var(--accent-dark); margin-right:10px;
+  }
+  .read-body{font-size:0.92rem; color:var(--ink); line-height:1.7; max-width:65ch;}
+  .read-body p{margin:0 0 12px;}
+  .read-body p:last-child{margin-bottom:0;}
+  .takeaway{
+    margin:16px 24px 20px; background:var(--good-bg); border-radius:10px;
+    padding:12px 16px; font-size:0.85rem; color:var(--ink);
+  }
+  .takeaway b{color:var(--good);}
 </style>
 </head>
 <body>
@@ -334,10 +369,79 @@
     </div>
     <div class="lessons">
       <div class="lesson" data-slug="m1-l1" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m1-l1')"></span><span class="l-text">Orientation + upsell: are you credentialed and enrolled yet?</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l1"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m1-l2" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m1-l2')"></span><span class="l-text">Practice info & providers: addresses, Tax ID, NPI, adding clinicians</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l2"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m1-l3" data-video="" onclick="toggleVideo(this)"><span class="tag-ins">Insurance track</span><span class="dot" onclick="toggleComplete(event,'m1-l3')"></span><span class="l-text">EDI enrollment — the step most providers miss</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l3"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m1-l2" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m1-l2')"></span><span class="l-text">Practice info & providers: addresses, Tax ID, NPI, adding clinicians<span class="l-why">Get this right the first time — claims, statements, and your fee schedule all pull from here.</span></span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l2">
+        <div class="panel-tabs">
+          <button class="ptab active" data-mode="watch" onclick="setLessonMode(event,'m1-l2','watch')">▶ Watch</button>
+          <button class="ptab" data-mode="read" onclick="setLessonMode(event,'m1-l2','read')">Read</button>
+          <button class="ptab" data-mode="listen" disabled title="Audio-only version coming soon">Listen</button>
+        </div>
+        <div class="panel-view" data-view="watch" data-for="m1-l2">
+          <div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div>
+          <div class="chapters">
+            <div onclick="seekVideo(event,'m1-l2',0)"><span>0:00</span>Practice Settings: name & address</div>
+            <div onclick="seekVideo(event,'m1-l2',15)"><span>0:15</span>Your NPI — Type 1 vs. Type 2</div>
+            <div onclick="seekVideo(event,'m1-l2',30)"><span>0:30</span>Adding a second clinician (group practices)</div>
+            <div onclick="seekVideo(event,'m1-l2',40)"><span>0:40</span>Where this info resurfaces later</div>
+          </div>
+        </div>
+        <div class="panel-view" data-view="read" data-for="m1-l2" hidden>
+          <div class="read-body">
+            <p>Practice Settings is where you enter your practice name, address, and NPI — your individual Type&nbsp;1 NPI, or a Type&nbsp;2 organizational NPI if you're a group practice. Add any additional clinicians here too.</p>
+            <p>Your Tax ID is <em>not</em> entered on this screen — that happens in Lesson 3, as part of EDI enrollment.</p>
+            <p>Get this screen right the first time: claims, statements, and your fee schedule all pull their practice info from here.</p>
+          </div>
+        </div>
+        <div class="takeaway"><b>Takeaway —</b> Your Tax ID isn't entered in Practice Settings. That's Lesson 3, during EDI enrollment.</div>
+      </div>
+      <div class="lesson" data-slug="m1-l3" data-video="" onclick="toggleVideo(this)"><span class="tag-ins">Insurance track</span><span class="dot" onclick="toggleComplete(event,'m1-l3')"></span><span class="l-text">EDI enrollment — the step most providers miss<span class="l-why">The single biggest thing self-billers miss — it's what lets claims go out electronically instead of by mail.</span></span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l3">
+        <div class="panel-tabs">
+          <button class="ptab active" data-mode="watch" onclick="setLessonMode(event,'m1-l3','watch')">▶ Watch</button>
+          <button class="ptab" data-mode="read" onclick="setLessonMode(event,'m1-l3','read')">Read</button>
+          <button class="ptab" data-mode="listen" disabled title="Audio-only version coming soon">Listen</button>
+        </div>
+        <div class="panel-view" data-view="watch" data-for="m1-l3">
+          <div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div>
+          <div class="chapters">
+            <div onclick="seekVideo(event,'m1-l3',0)"><span>0:00</span>What EDI is & why it's a one-time, per-payer setup</div>
+            <div onclick="seekVideo(event,'m1-l3',30)"><span>0:30</span>Finding EDI enrollment & selecting a payer</div>
+            <div onclick="seekVideo(event,'m1-l3',60)"><span>1:00</span>The enrollment form — this is where your Tax ID goes</div>
+            <div onclick="seekVideo(event,'m1-l3',100)"><span>1:40</span>Pending vs. approved, and realistic timelines</div>
+          </div>
+        </div>
+        <div class="panel-view" data-view="read" data-for="m1-l3" hidden>
+          <div class="read-body">
+            <p>EDI (Electronic Data Interchange) is the connection that lets SimplePractice send claims straight to a payer instead of you mailing or faxing paper claims. It's a one-time setup — per payer.</p>
+            <p>Find EDI enrollment in Settings, select a payer, and fill out the form: clinician info (NPI, and your Tax ID — this is where it actually goes, not Lesson 2's Practice Settings) and practice info.</p>
+            <p>Once submitted, status shows as pending until the payer approves it. Timelines vary — anywhere from a few days to a few weeks. Do this for every payer you take.</p>
+          </div>
+        </div>
+        <div class="takeaway"><b>Takeaway —</b> Your Tax ID goes on the EDI enrollment form, not Practice Settings. Enroll payer by payer — approval can take days to weeks.</div>
+      </div>
       <div class="lesson" data-slug="m1-l4" data-video="" onclick="toggleVideo(this)"><span class="tag-ins">Insurance track</span><span class="dot" onclick="toggleComplete(event,'m1-l4')"></span><span class="l-text">ERA enrollment — the automation key</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l4"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m1-l5" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m1-l5')"></span><span class="l-text">Services & CPT codes + building your fee schedule</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l5"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m1-l5" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m1-l5')"></span><span class="l-text">Services & CPT codes + building your fee schedule<span class="l-why">Where you set what you actually charge — and where the most common rate-setting mistake happens.</span></span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l5">
+        <div class="panel-tabs">
+          <button class="ptab active" data-mode="watch" onclick="setLessonMode(event,'m1-l5','watch')">▶ Watch</button>
+          <button class="ptab" data-mode="read" onclick="setLessonMode(event,'m1-l5','read')">Read</button>
+          <button class="ptab" data-mode="listen" disabled title="Audio-only version coming soon">Listen</button>
+        </div>
+        <div class="panel-view" data-view="watch" data-for="m1-l5">
+          <div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div>
+          <div class="chapters">
+            <div onclick="seekVideo(event,'m1-l5',0)"><span>0:00</span>Services & CPT codes — one default rate per code</div>
+            <div onclick="seekVideo(event,'m1-l5',35)"><span>0:35</span>Setting your default rate (90791, 90834, 90837, 90847)</div>
+            <div onclick="seekVideo(event,'m1-l5',65)"><span>1:05</span>Client-specific overrides via Client Default Services</div>
+            <div onclick="seekVideo(event,'m1-l5',95)"><span>1:35</span>Telehealth modifiers & mapping to appointment types</div>
+          </div>
+        </div>
+        <div class="panel-view" data-view="read" data-for="m1-l5" hidden>
+          <div class="read-body">
+            <p>Services and CPT codes live in Settings, where you set a single practice-level default rate per code — 90791 for intakes, 90834 and 90837 for 45- and 60-minute therapy, 90847 for family/couples.</p>
+            <p>SimplePractice doesn't have separate "self-pay rate" and "insurance rate" fields on a service code — there's just the one default. If a specific client needs something different (a contracted insurance rate, a sliding-scale rate), you set that on <em>their</em> profile, under Billing and Insurance → Client Default Services, which overrides the practice default just for them.</p>
+            <p>Double-check telehealth modifiers and place-of-service codes, and make sure each service maps to the right appointment type.</p>
+          </div>
+        </div>
+        <div class="takeaway"><b>Takeaway —</b> One default rate per CPT code at the practice level. Client-specific rates (contracted, sliding-scale) go on that client's profile under Client Default Services — not on the code itself.</div>
+      </div>
       <div class="lesson" data-slug="m1-l6" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m1-l6')"></span><span class="l-text">Appointment types + setup checklist: did you miss anything?</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l6"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
       <div class="lesson" data-slug="m1-l7" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m1-l7')"></span><span class="l-text">HIPAA basics & BAAs when using third-party tools alongside SimplePractice</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l7"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
     </div>
@@ -469,6 +573,40 @@ function toggleVideo(lessonEl){
     if(!iframe.src){
       iframe.src = 'https://www.youtube-nocookie.com/embed/' + videoId;
     }
+  }
+}
+
+// Watch / Read tab switching within a lesson's expanded panel.
+// (Listen is disabled until an audio-only file exists for that lesson.)
+function setLessonMode(event, slug, mode){
+  event.stopPropagation();
+  var row = document.querySelector('.video-row[data-for="' + slug + '"]');
+  if(!row){ return; }
+  row.querySelectorAll('.ptab').forEach(function(btn){
+    btn.classList.toggle('active', btn.getAttribute('data-mode') === mode);
+  });
+  row.querySelectorAll('.panel-view').forEach(function(view){
+    view.hidden = (view.getAttribute('data-view') !== mode);
+  });
+}
+
+// Chapter click: jump the already-open video to that timestamp (and switch to Watch if on Read).
+function seekVideo(event, slug, seconds){
+  event.stopPropagation();
+  var lessonEl = document.querySelector('.lesson[data-slug="' + slug + '"]');
+  var videoId = lessonEl ? lessonEl.getAttribute('data-video') : '';
+  if(!videoId){ return; }
+  var row = document.querySelector('.video-row[data-for="' + slug + '"]');
+  if(!row){ return; }
+  row.querySelectorAll('.ptab').forEach(function(btn){
+    btn.classList.toggle('active', btn.getAttribute('data-mode') === 'watch');
+  });
+  row.querySelectorAll('.panel-view').forEach(function(view){
+    view.hidden = (view.getAttribute('data-view') !== 'watch');
+  });
+  var iframe = row.querySelector('iframe');
+  if(iframe){
+    iframe.src = 'https://www.youtube-nocookie.com/embed/' + videoId + '?start=' + Math.floor(seconds) + '&autoplay=1';
   }
 }
 
