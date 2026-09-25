@@ -204,6 +204,73 @@
   .video-row .video-embed iframe{
     position:absolute; top:0; left:0; width:100%; height:100%; border:0;
   }
+
+  /* progress tracking */
+  .lesson .dot{cursor:pointer; transition:background .15s, border-color .15s;}
+  .lesson .dot:hover{border-color:var(--accent);}
+  .lesson .dot.complete{
+    background:var(--good); border-color:var(--good);
+    position:relative;
+  }
+  .lesson .dot.complete::after{
+    content:"✓"; position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-size:0.7rem; font-weight:700;
+  }
+  .m-progress{
+    display:block; font-size:0.78rem; color:var(--good); margin-top:2px; font-weight:600;
+  }
+  .m-progress:empty{display:none;}
+
+  .overall-progress{
+    max-width:520px; margin:0 auto 32px; text-align:center;
+  }
+  .progress-track{
+    height:8px; border-radius:999px; background:var(--card-line); overflow:hidden;
+  }
+  .progress-fill{
+    height:100%; width:0%; background:var(--good); border-radius:999px;
+    transition:width .4s ease;
+  }
+  .progress-label{
+    font-size:0.85rem; color:var(--muted); margin-top:10px;
+  }
+  .resume-btn{
+    display:inline-block; margin-top:14px;
+    font-family:"Inter", sans-serif; font-size:0.85rem; font-weight:600;
+    color:#fff; background:var(--accent-dark);
+    border:none; border-radius:999px; padding:9px 20px;
+    cursor:pointer; transition:background .15s;
+  }
+  .resume-btn:hover{background:#4d6650;}
+  .resume-btn[disabled]{
+    background:var(--card-line); color:var(--muted); cursor:default;
+  }
+
+  /* path filter */
+  .path-filter{
+    display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-bottom:18px;
+  }
+  .path-btn{
+    font-family:"Inter", sans-serif; font-size:0.82rem; font-weight:600;
+    color:var(--accent-dark); background:#eef1e8;
+    border:1px solid var(--card-line); border-radius:999px;
+    padding:7px 16px; cursor:pointer; transition:background .15s, color .15s;
+  }
+  .path-btn:hover{background:#e2e8da;}
+  .path-btn.active{
+    background:var(--accent-dark); color:#fff; border-color:var(--accent-dark);
+  }
+  .module.dimmed, .lesson.dimmed{
+    opacity:0.4;
+  }
+  .highlight-pulse{
+    animation:pulseGlow 1.4s ease 2;
+  }
+  @keyframes pulseGlow{
+    0%, 100%{box-shadow:0 0 0 0 rgba(122,158,126,0);}
+    50%{box-shadow:0 0 0 6px rgba(122,158,126,0.35);}
+  }
 </style>
 </head>
 <body>
@@ -217,6 +284,18 @@
   </header>
 
   <p class="progress-note">7 modules · 30 lessons · lessons unlock as they're added</p>
+
+  <div class="overall-progress">
+    <div class="progress-track"><div class="progress-fill" id="overallFill"></div></div>
+    <div class="progress-label" id="overallLabel">0 of 30 lessons complete</div>
+    <button class="resume-btn" id="resumeBtn" onclick="resumeCourse()" disabled>Resume where you left off →</button>
+  </div>
+
+  <div class="path-filter" id="pathFilter">
+    <button class="path-btn" data-path="all" onclick="setPath('all')">All modules</button>
+    <button class="path-btn" data-path="self-pay" onclick="setPath('self-pay')">Self-pay path</button>
+    <button class="path-btn" data-path="insurance" onclick="setPath('insurance')">Insurance path</button>
+  </div>
 
   <div class="path-note">
     <strong>Three paths through this course:</strong> your path depends on how your practice bills, and each one is just as complete a course as the others — none is a stripped-down version.
@@ -234,11 +313,12 @@
       <div class="module-titles">
         <div class="m-title">Before You Start (Orientation)</div>
         <div class="m-sub">1 lesson · a short video so nobody starts Module 1 lost</div>
+      <span class="m-progress"></span>
       </div>
       <div class="chevron">▶</div>
     </div>
     <div class="lessons">
-      <div class="lesson" data-slug="m0-l1" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Welcome, the course roadmap, and what to have ready before you start</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m0-l1"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m0-l1" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m0-l1')"></span><span class="l-text">Welcome, the course roadmap, and what to have ready before you start</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m0-l1"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
     </div>
   </div>
 
@@ -248,17 +328,18 @@
       <div class="module-titles">
         <div class="m-title">Practice Setup</div>
         <div class="m-sub">7 lessons · getting SimplePractice fully configured before you bill anything</div>
+      <span class="m-progress"></span>
       </div>
       <div class="chevron">▶</div>
     </div>
     <div class="lessons">
-      <div class="lesson" data-slug="m1-l1" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Orientation + upsell: are you credentialed and enrolled yet?</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l1"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m1-l2" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Practice info & providers: addresses, Tax ID, NPI, adding clinicians</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l2"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m1-l3" data-video="" onclick="toggleVideo(this)"><span class="tag-ins">Insurance track</span><span class="dot"></span><span class="l-text">EDI enrollment — the step most providers miss</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l3"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m1-l4" data-video="" onclick="toggleVideo(this)"><span class="tag-ins">Insurance track</span><span class="dot"></span><span class="l-text">ERA enrollment — the automation key</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l4"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m1-l5" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Services & CPT codes + building your fee schedule</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l5"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m1-l6" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Appointment types + setup checklist: did you miss anything?</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l6"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m1-l7" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">HIPAA basics & BAAs when using third-party tools alongside SimplePractice</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l7"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m1-l1" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m1-l1')"></span><span class="l-text">Orientation + upsell: are you credentialed and enrolled yet?</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l1"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m1-l2" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m1-l2')"></span><span class="l-text">Practice info & providers: addresses, Tax ID, NPI, adding clinicians</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l2"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m1-l3" data-video="" onclick="toggleVideo(this)"><span class="tag-ins">Insurance track</span><span class="dot" onclick="toggleComplete(event,'m1-l3')"></span><span class="l-text">EDI enrollment — the step most providers miss</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l3"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m1-l4" data-video="" onclick="toggleVideo(this)"><span class="tag-ins">Insurance track</span><span class="dot" onclick="toggleComplete(event,'m1-l4')"></span><span class="l-text">ERA enrollment — the automation key</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l4"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m1-l5" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m1-l5')"></span><span class="l-text">Services & CPT codes + building your fee schedule</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l5"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m1-l6" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m1-l6')"></span><span class="l-text">Appointment types + setup checklist: did you miss anything?</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l6"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m1-l7" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m1-l7')"></span><span class="l-text">HIPAA basics & BAAs when using third-party tools alongside SimplePractice</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m1-l7"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
     </div>
   </div>
 
@@ -268,70 +349,74 @@
       <div class="module-titles">
         <div class="m-title">Client Billing</div>
         <div class="m-sub">6 lessons · invoicing, statements, payments, and auto-pay</div>
+      <span class="m-progress"></span>
       </div>
       <div class="chevron">▶</div>
     </div>
     <div class="lessons">
-      <div class="lesson" data-slug="m2-l1" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Card on file & invoicing basics</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m2-l1"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m2-l2" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Understanding client balances & processing a payment</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m2-l2"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m2-l3" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Generating a client statement</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m2-l3"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m2-l4" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Processing a refund</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m2-l4"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m2-l5" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Setting up Auto-Pay</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m2-l5"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m2-l6" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">No-show / late-cancellation fees — policy and setup</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m2-l6"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m2-l1" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m2-l1')"></span><span class="l-text">Card on file & invoicing basics</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m2-l1"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m2-l2" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m2-l2')"></span><span class="l-text">Understanding client balances & processing a payment</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m2-l2"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m2-l3" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m2-l3')"></span><span class="l-text">Generating a client statement</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m2-l3"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m2-l4" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m2-l4')"></span><span class="l-text">Processing a refund</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m2-l4"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m2-l5" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m2-l5')"></span><span class="l-text">Setting up Auto-Pay</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m2-l5"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m2-l6" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m2-l6')"></span><span class="l-text">No-show / late-cancellation fees — policy and setup</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m2-l6"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
     </div>
   </div>
 
-  <div class="module" data-module="3">
+  <div class="module" data-track="self-pay" data-module="3">
     <div class="module-head" onclick="toggleModule(this)">
       <div class="module-num">3</div>
       <div class="module-titles">
         <div class="m-title-row"><div class="m-title">Self-Pay Billing</div><span class="tag-self">Self-pay track</span></div>
         <div class="m-sub">5 lessons · for self-pay-only and mixed practices alike — skip this module if you take insurance only</div>
+      <span class="m-progress"></span>
       </div>
       <div class="chevron">▶</div>
     </div>
     <div class="lessons">
-      <div class="lesson" data-slug="m3-l1" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Self-pay basics — setting a client up as self-pay in SimplePractice</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m3-l1"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m3-l2" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Setting your self-pay rate & sliding scale</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m3-l2"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m3-l3" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">The Good Faith Estimate (No Surprises Act) — who needs one, how to generate it</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m3-l3"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m3-l4" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Superbills for self-pay / out-of-network clients</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m3-l4"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m3-l5" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Self-pay collection policy: charging upfront vs. billing after session</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m3-l5"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m3-l1" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m3-l1')"></span><span class="l-text">Self-pay basics — setting a client up as self-pay in SimplePractice</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m3-l1"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m3-l2" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m3-l2')"></span><span class="l-text">Setting your self-pay rate & sliding scale</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m3-l2"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m3-l3" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m3-l3')"></span><span class="l-text">The Good Faith Estimate (No Surprises Act) — who needs one, how to generate it</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m3-l3"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m3-l4" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m3-l4')"></span><span class="l-text">Superbills for self-pay / out-of-network clients</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m3-l4"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m3-l5" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m3-l5')"></span><span class="l-text">Self-pay collection policy: charging upfront vs. billing after session</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m3-l5"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
     </div>
   </div>
 
-  <div class="module" data-module="4">
+  <div class="module" data-track="insurance" data-module="4">
     <div class="module-head" onclick="toggleModule(this)">
       <div class="module-num">4</div>
       <div class="module-titles">
         <div class="m-title-row"><div class="m-title">Insurance Billing</div><span class="tag-ins">Insurance track</span></div>
         <div class="m-sub">6 lessons · eligibility, coding, claims, denials, and reconciliation</div>
+      <span class="m-progress"></span>
       </div>
       <div class="chevron">▶</div>
     </div>
     <div class="lessons">
-      <div class="lesson" data-slug="m4-l1" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Entering insurance info + tracking eligibility status</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m4-l1"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m4-l2" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Running eligibility & benefits checks — plus the Availity money-saving tip</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m4-l2"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m4-l3" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Mental health coding basics: CPT, diagnosis codes, modifiers</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m4-l3"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m4-l4" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Claim generation and submission</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m4-l4"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m4-l5" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Secondary insurance & RCM: claims tracking and follow-up</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m4-l5"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m4-l6" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Reading denials and running reconciliation</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m4-l6"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m4-l1" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m4-l1')"></span><span class="l-text">Entering insurance info + tracking eligibility status</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m4-l1"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m4-l2" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m4-l2')"></span><span class="l-text">Running eligibility & benefits checks — plus the Availity money-saving tip</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m4-l2"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m4-l3" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m4-l3')"></span><span class="l-text">Mental health coding basics: CPT, diagnosis codes, modifiers</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m4-l3"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m4-l4" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m4-l4')"></span><span class="l-text">Claim generation and submission</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m4-l4"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m4-l5" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m4-l5')"></span><span class="l-text">Secondary insurance & RCM: claims tracking and follow-up</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m4-l5"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m4-l6" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m4-l6')"></span><span class="l-text">Reading denials and running reconciliation</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m4-l6"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
     </div>
   </div>
 
-  <div class="module" data-module="5">
+  <div class="module" data-track="insurance" data-module="5">
     <div class="module-head" onclick="toggleModule(this)">
       <div class="module-num">5</div>
       <div class="module-titles">
         <div class="m-title-row"><div class="m-title">Automation & Your Admin Workflow</div><span class="tag-ins">Insurance track</span></div>
         <div class="m-sub">4 lessons · the payoff module — this is where it all clicks together</div>
+      <span class="m-progress"></span>
       </div>
       <div class="chevron">▶</div>
     </div>
     <div class="lessons">
-      <div class="lesson" data-slug="m5-l1" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">How EDI + ERA together enable one-button claims & auto-posting</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m5-l1"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m5-l2" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Your weekly admin routine & running an outstanding-balances report</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m5-l2"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m5-l3" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Using the balance checker tool & tracking aging insurance payments</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m5-l3"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
-      <div class="lesson" data-slug="m5-l4" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Resolving aging claims + a sample "admin day" walkthrough</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m5-l4"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m5-l1" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m5-l1')"></span><span class="l-text">How EDI + ERA together enable one-button claims & auto-posting</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m5-l1"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m5-l2" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m5-l2')"></span><span class="l-text">Your weekly admin routine & running an outstanding-balances report</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m5-l2"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m5-l3" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m5-l3')"></span><span class="l-text">Using the balance checker tool & tracking aging insurance payments</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m5-l3"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m5-l4" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m5-l4')"></span><span class="l-text">Resolving aging claims + a sample "admin day" walkthrough</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m5-l4"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
     </div>
   </div>
 
@@ -341,11 +426,12 @@
       <div class="module-titles">
         <div class="m-title">Wrap-Up</div>
         <div class="m-sub">1 lesson · finances note & where to go from here</div>
+      <span class="m-progress"></span>
       </div>
       <div class="chevron">▶</div>
     </div>
     <div class="lessons">
-      <div class="lesson" data-slug="m6-l1" data-video="" onclick="toggleVideo(this)"><span class="dot"></span><span class="l-text">Separating business & personal finances, and where to go from here</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m6-l1"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
+      <div class="lesson" data-slug="m6-l1" data-video="" onclick="toggleVideo(this)"><span class="dot" onclick="toggleComplete(event,'m6-l1')"></span><span class="l-text">Separating business & personal finances, and where to go from here</span><span class="l-status">Coming soon</span></div><div class="video-row" data-for="m6-l1"><div class="video-embed"><iframe data-src="" allowfullscreen></iframe></div></div>
     </div>
   </div>
 
@@ -399,7 +485,120 @@ document.addEventListener('DOMContentLoaded', function(){
       }
     }
   });
+  renderProgress();
+  setPath(loadPath());
 });
+
+/* ---- progress tracking (per-browser, via localStorage) ---- */
+var PROGRESS_KEY = 'sp-masterclass-progress';
+var PATH_KEY = 'sp-masterclass-path';
+
+function loadProgress(){
+  try{
+    return JSON.parse(localStorage.getItem(PROGRESS_KEY)) || {};
+  }catch(e){ return {}; }
+}
+function saveProgress(progress){
+  try{ localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress)); }catch(e){}
+}
+function loadPath(){
+  try{ return localStorage.getItem(PATH_KEY) || 'all'; }catch(e){ return 'all'; }
+}
+function savePath(path){
+  try{ localStorage.setItem(PATH_KEY, path); }catch(e){}
+}
+
+function toggleComplete(event, slug){
+  event.stopPropagation(); // don't also trigger the lesson row's video toggle
+  var progress = loadProgress();
+  progress[slug] = !progress[slug];
+  saveProgress(progress);
+  renderProgress();
+}
+
+function renderProgress(){
+  var progress = loadProgress();
+  var totalDone = 0, totalAll = 0;
+
+  document.querySelectorAll('.module').forEach(function(mod){
+    var dots = mod.querySelectorAll('.lesson .dot');
+    var moduleDone = 0;
+    dots.forEach(function(dot){
+      var lessonEl = dot.closest('.lesson');
+      var slug = lessonEl.getAttribute('data-slug');
+      var done = !!progress[slug];
+      dot.classList.toggle('complete', done);
+      if(done){ moduleDone++; }
+    });
+    totalDone += moduleDone;
+    totalAll += dots.length;
+
+    var numEl = mod.querySelector('.module-num');
+    var progEl = mod.querySelector('.m-progress');
+    if(progEl){
+      progEl.textContent = moduleDone > 0 ? (moduleDone + ' of ' + dots.length + ' complete') : '';
+    }
+    if(numEl){
+      numEl.classList.toggle('done', dots.length > 0 && moduleDone === dots.length);
+    }
+  });
+
+  var fillEl = document.getElementById('overallFill');
+  var labelEl = document.getElementById('overallLabel');
+  var resumeBtn = document.getElementById('resumeBtn');
+  var pct = totalAll ? Math.round((totalDone / totalAll) * 100) : 0;
+  if(fillEl){ fillEl.style.width = pct + '%'; }
+  if(labelEl){ labelEl.textContent = totalDone + ' of ' + totalAll + ' lessons complete'; }
+  if(resumeBtn){ resumeBtn.disabled = (totalDone === 0); }
+}
+
+/* ---- path filter: dims modules/lessons that don't apply to the chosen path ---- */
+function setPath(path){
+  savePath(path);
+  document.querySelectorAll('.path-btn').forEach(function(btn){
+    btn.classList.toggle('active', btn.getAttribute('data-path') === path);
+  });
+
+  document.querySelectorAll('.module').forEach(function(mod){
+    var track = mod.getAttribute('data-track'); // 'self-pay', 'insurance', or none (applies to everyone)
+    var moduleDim = (path !== 'all' && track && track !== path);
+    mod.classList.toggle('dimmed', moduleDim);
+
+    // also dim individual tagged lessons inside modules that otherwise apply to everyone
+    mod.querySelectorAll('.lesson').forEach(function(lessonEl){
+      var hasIns = !!lessonEl.querySelector('.tag-ins');
+      var hasSelf = !!lessonEl.querySelector('.tag-self');
+      var lessonDim = false;
+      if(!moduleDim){
+        if(path === 'self-pay' && hasIns){ lessonDim = true; }
+        if(path === 'insurance' && hasSelf){ lessonDim = true; }
+      }
+      lessonEl.classList.toggle('dimmed', lessonDim);
+    });
+  });
+}
+
+/* ---- resume: opens the module containing the first incomplete lesson and scrolls to it ---- */
+function resumeCourse(){
+  var progress = loadProgress();
+  var target = null;
+  document.querySelectorAll('.lesson[data-slug]').forEach(function(lessonEl){
+    if(target){ return; }
+    var slug = lessonEl.getAttribute('data-slug');
+    if(!progress[slug]){ target = lessonEl; }
+  });
+  if(!target){ return; }
+
+  var mod = target.closest('.module');
+  document.querySelectorAll('.module').forEach(function(m){ m.classList.remove('open'); });
+  mod.classList.add('open');
+
+  setTimeout(function(){
+    target.scrollIntoView({behavior:'smooth', block:'center'});
+    target.classList.add('highlight-pulse');
+    setTimeout(function(){ target.classList.remove('highlight-pulse'); }, 2900);
+  }, 50);
+}
 </script>
 </body>
 </html>
